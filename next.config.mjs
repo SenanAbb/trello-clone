@@ -8,6 +8,10 @@ const nextConfig = {
         // port: "",
         // pathname: "/wikipedia/en/thumb/8/8c/Trello_logo.svg/1280px-Trello_logo.svg.png",
       },
+      {
+        protocol: "https",
+        hostname: "cloud.appwrite.io"
+      }
     ],
   },
   // Necesario para trabajar con react-beautiful-dnd que este en false

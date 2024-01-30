@@ -7,7 +7,17 @@ interface BoardState {
     updateTodoInDB: (todo: Todo, columnId: TypedColumn) => void,
     searchString: string,
     setSearchString: (searchString: string) => void;
+
+    addTask: (todo: string, columnId: TypedColumn, image?: File | null) => void,
     deleteTask: (taskIndex: number, todo: Todo, id: TypedColumn) => void
+
+    newTaskInput: string;
+    setNewTaskInput: (input: string) => void;
+    newTaskType: TypedColumn,
+    setNewTaskType: (columnId: TypedColumn) => void;
+
+    image: File | null;
+    setImage: (image: File | null) => void,
 }
 
 interface Board {
@@ -21,12 +31,17 @@ interface Column {
     todos: Todo[]
 }
 
+interface Image extends HTMLImageElement {
+    bucketId: string,
+    imageId: string
+}
+
 interface Todo {
     $id: string,
     $createdAt: string,
     title: string,
     status: string,
-    image?: string
+    image?: Image
 }
 
 interface Image {
