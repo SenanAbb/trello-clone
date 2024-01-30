@@ -10,6 +10,8 @@ const nextConfig = {
       },
     ],
   },
+  // Necesario para trabajar con react-beautiful-dnd que este en false
+  reactStrictMode: false
 };
 
 export default nextConfig;

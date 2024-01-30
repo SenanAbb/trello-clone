@@ -3,8 +3,29 @@
 import Image from "next/image";
 import { MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Avatar from "react-avatar";
+import { useBoardStore } from "@/store/BoardStore";
+import { useEffect, useState } from "react";
+import fetchSuggestion from "@/lib/fetchSuggestion";
 
 export default function Header() {
+  const [board, searchString, setSearchString] = useBoardStore((state) => [
+    state.board,
+    state.searchString,
+    state.setSearchString,
+  ]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [suggestion, setSuggestion] = useState<string>("");
+
+  // GPT functionality
+  // useEffect(() => {
+  //   if (board.columns.size === 0) return;
+  //   setLoading(true);
+  //   const suggestion = fetchSuggestion(board).then((suggestion) => {
+  //     setSuggestion(suggestion);
+  //     setLoading(false);
+  //   });
+  // }, [board]);
+
   return (
     <header>
       <div className="flex flex-col md:flex-row items-center p-5 bg-gray-500/10 rounded-b-2xl">
@@ -41,9 +62,10 @@ export default function Header() {
               type="text"
               placeholder="Search"
               className="flex-1 outline-none p-2"
+              onChange={(e) => setSearchString(e.target.value)}
             />
             <button type="submit" hidden>
-              Search
+              {searchString}
             </button>
           </form>
 
@@ -54,8 +76,13 @@ export default function Header() {
 
       <div className="flex items-center justify-center px-5 py-5">
         <p className="flex items-center text-sm font-light p-5 shadow-xl rounded-xl w-fit italic max-w-3xl text-[#0055D1] bg-white">
-          <UserCircleIcon className="inline-block h-10 w-10 text-[#0055D1] mr-1" />
-          GPT Section (has to connect to OpenAI with API Key)
+          <UserCircleIcon
+            className={`inline-block h-10 w-10 text-[#0055D1] mr-1 
+          ${loading && "animate-spin"}`}
+          />
+          {suggestion && !loading
+            ? suggestion
+            : "GPT is summarising for the day..."}
         </p>
       </div>
     </header>
